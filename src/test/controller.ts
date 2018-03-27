@@ -1,6 +1,6 @@
 import {BadRequestError, Body, Get, JsonController, Post} from "routing-controllers"
 import * as request from 'superagent'
-import {Subscription, Target} from "../targeturls/entities";
+import {Target} from "../targeturls/entities";
 
 @JsonController()
 export default class TestController {
@@ -15,20 +15,22 @@ export default class TestController {
 
   @Post('/hook')
   async createHook(
-    @Body() hook: Target
+    @Body() body: Target
   ) {
-    const entity = await Target.create(hook).save()
+    const newResponse =  Target.create(body).save()
 
-    await Subscription.create({
-      name: 'response',
-      target: entity
-    }).save()
-
-    return Target.findOneById(entity.id)
+    request
+      .post('oururl/events')
+      .send({
+        eventname: 'response',
+        data: newResponse
+      })
   }
 
-  @Post('')
+  @Post('/events')
   async testHook(@Body() body: object) {
+
+    //Check the target that are listening to the event
 
     try {
       await request
@@ -39,6 +41,21 @@ export default class TestController {
       return {message: err.message}
     }
 
+
   }
 
+}
+
+interface HookBody {
+  name: string
+  active?: boolean
+  events: string[]
+  url: string
+}
+
+const testObject: HookBody = {
+  name: 'test',
+  active: true,
+  events: ['response', 'newquiz'],
+  url: 'example.com/test'
 }

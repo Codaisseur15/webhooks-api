@@ -1,5 +1,5 @@
-import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {IsString, IsUrl, IsBoolean} from 'class-validator'
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsString, IsUrl, IsBoolean, IsArray} from 'class-validator'
 
 @Entity()
 export class Target extends BaseEntity {
@@ -11,30 +11,16 @@ export class Target extends BaseEntity {
   @Column('text', {nullable:false})
   name: string
 
-  //@IsBoolean()
+  @IsBoolean()
   @Column('boolean', {nullable:false, default: true})
-  active: boolean
+  active?: boolean
 
   @IsUrl()
   @Column('text', {nullable:false})
   url: string
 
-  @OneToMany(() => Subscription, subscription => subscription.target)
-  subscriptions: Subscription[]
-
-}
-
-@Entity()
-export class Subscription extends BaseEntity {
-
-  @PrimaryGeneratedColumn()
-  id?: number
-
-  @IsString()
-  @Column('text', {nullable:false})
-  name: string
-
-  @ManyToOne(() => Target, target => target.subscriptions, {eager:true})
-  target: Target
+  @IsArray()
+  @Column('simple-array', {nullable:false})
+  events: string[]
 
 }
