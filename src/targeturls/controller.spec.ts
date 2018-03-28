@@ -9,12 +9,12 @@ beforeAll(async () => {
     await setupDb()
 })
 
-describe('PagesController', () => {
-    test('/pages', async () => {
+describe('TargetController', () => {
+    test('/targets', async () => {
         await request(await app.callback())
-            .get('/pages')
+            .get('/targets')
             .set('Accept', 'application/json')
-            .set('x-user-roles', 'teacher')
+            //.set('x-user-roles', 'teacher')
             .expect(200)
     })
 })
