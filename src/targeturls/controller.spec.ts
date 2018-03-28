@@ -20,9 +20,10 @@ describe('TargetController', () => {
             .expect(200)
     })
 
-    const  parameter = 1;
+    
 
     test('/targets/1', async () => {
+        const parameter = 1;
         await request(await app.callback())
             .get('/targets/' + parameter)
             .set('Accept', 'application/json')
