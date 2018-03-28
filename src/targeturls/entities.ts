@@ -1,5 +1,6 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-import {IsString, IsUrl, IsBoolean, IsArray} from 'class-validator'
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {IsString, IsUrl, IsArray} from 'class-validator'
+import {SentEvent} from "../events/entity";
 
 @Entity()
 export class Target extends BaseEntity {
@@ -11,7 +12,6 @@ export class Target extends BaseEntity {
   @Column('text', {nullable:false})
   name: string
 
-  @IsBoolean()
   @Column('boolean', {nullable:false, default: true})
   active?: boolean
 
@@ -22,5 +22,8 @@ export class Target extends BaseEntity {
   @IsArray()
   @Column('simple-array', {nullable:false})
   events: string[]
+
+  @OneToMany(() => SentEvent, e => e.target)
+  sentEvents: SentEvent[]
 
 }
