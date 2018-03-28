@@ -74,6 +74,7 @@ export default class EventController {
     return { failedEvents }
   }
 
+  // Find events by status code (http :4008/events?status=<code>)
   @Get('/events')
   async getEventByStatus(
     @QueryParam('status') status: number
