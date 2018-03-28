@@ -57,19 +57,21 @@ export default class EventController {
   @Get('/events/sent')
   async getSentEvents(
   ) {
-    const events = await SentEvent.find(
-      {where: {status: 201}}
+    const sentEvents = await SentEvent.find(
+      {where: { status: 201 }}
     )
-    return { events }
+    return { sentEvents }
   }
 
   @Get('/events/failed')
   async getFailedEvents(
   ) {
-    const events = await SentEvent.find(
-      {where: {status: !(201)}}
-    )
-    return { events }
+    const failedEvents = await getRepository(SentEvent)
+    .createQueryBuilder("event")
+    .where("event.status != 201")
+    .getMany()
+
+    return { failedEvents }
   }
 
   @Get('/events')
