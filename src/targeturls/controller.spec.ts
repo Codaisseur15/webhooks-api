@@ -26,14 +26,12 @@ describe('TargetController', () => {
         const parameter = 1;
         await request(await app.callback())
             .get('/targets/' + parameter)
-            //.set('Accept', 'application/json')
+            .set('Accept', 'application/json')
             //.set('x-user-roles', 'teacher')
             .expect(await function (res) {
                 res.body.id = 1;
             })
-            .expect(200, {
-                id: 1
-            })
+            .expect(200)
     })
 
     test('/targets', async () => {
