@@ -1,8 +1,13 @@
-import {Body, JsonController, Post} from "routing-controllers";
+import {Body, JsonController, Post, Get} from "routing-controllers";
 import {Target} from "./entities";
 
 @JsonController()
 export default class TargetController {
+
+  @Get('/targets')
+    getAllTargets(){
+      return Target.find()
+    }
 
   @Post('/targets')
   createHook(
