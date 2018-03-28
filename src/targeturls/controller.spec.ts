@@ -25,7 +25,7 @@ describe('TargetController', () => {
             .get('/targets/id')
             .set('Accept', 'application/json')
             //.set('x-user-roles', 'teacher')
-            .expect(function (res) {
+            .expect(await function (res) {
                 res.body.id = 1;
             })
             .expect(200, {
