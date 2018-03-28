@@ -26,7 +26,7 @@ describe('TargetController', () => {
         const parameter = 1;
         await request(await app.callback())
             .get('/targets/' + parameter)
-            .set('Accept', 'application/json')
+            //.set('Accept', 'application/json')
             //.set('x-user-roles', 'teacher')
             .expect(await function (res) {
                 res.body.id = 1;
@@ -34,6 +34,22 @@ describe('TargetController', () => {
             .expect(200, {
                 id: 1
             })
+    })
+
+    test('/targets', async () => {
+        await request(await app.callback())
+            .post('/targets')
+            .set('Accept', 'application/json')
+            .set(
+                    {
+                        name: "automated Test",
+                        active: true,
+                        url: "test@test.tt",
+                        events: []
+                    }
+                )
+            //.set('x-user-roles', 'teacher')
+            .expect(200)
     })
 
 })
