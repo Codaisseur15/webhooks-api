@@ -22,8 +22,8 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon --inspect .",
-    "watch": "node_modules/.bin/tsc -w",
-    "compile": "node_modules/.bin/tsc -p .",
+    "watch": "tsc -w",
+    "compile": "tsc -p .",
     "test": "jest --watch --notify",
     "test:ci": "jest --ci"
   },
