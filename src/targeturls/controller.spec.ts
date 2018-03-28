@@ -20,7 +20,7 @@ describe('TargetController', () => {
             .expect(200)
     })
 
-    test('/targets', async () => {
+    test('/targets/1', async () => {
         await request(await app.callback())
             .get('/targets')
             .set('Accept', 'application/json')
