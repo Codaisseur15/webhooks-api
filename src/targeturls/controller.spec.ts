@@ -22,7 +22,7 @@ describe('TargetController', () => {
 
     test('/targets', async () => {
         await request(await app.callback())
-            .get('/targets/id')
+            .get('/targets')
             .set('Accept', 'application/json')
             //.set('x-user-roles', 'teacher')
             .expect(await function (res) {
