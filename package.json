@@ -2,7 +2,7 @@
   "name": "typequiz-backend",
   "version": "1.0.0",
   "main": "target/index.js",
-  "author": "nsch1 <nick.schooneman1@gmail.com>",
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "@types/koa": "^2.0.44",
@@ -21,7 +21,9 @@
   },
   "scripts": {
     "start": "node .",
-    "dev": "nodemon --inspect ."
+    "dev": "nodemon --inspect .",
+    "watch": "node_modules/.bin/tsc -w",
+    "compile": "node_modules/.bin/tsc -p ."
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
