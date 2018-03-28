@@ -57,13 +57,19 @@ export default class EventController {
   @Get('/events/sent')
   async getSentEvents(
   ) {
-
+    const events = await SentEvent.find(
+      {where: {status: 201}}
+    )
+    return { events }
   }
 
   @Get('/events/failed')
   async getFailedEvents(
   ) {
-
+    const events = await SentEvent.find(
+      {where: {status: !(201)}}
+    )
+    return { events }
   }
 
   @Get('/events')
