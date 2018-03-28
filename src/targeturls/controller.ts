@@ -30,5 +30,20 @@ export default class TargetController {
     return Target.merge(target, update).save()
   }
 
+  @Get('/targets')
+  async getHooks(
+  ) {
+    const targets = await Target.find()
+    return { targets }
+  }
+
+  @Get('/targets/:id')
+  async getHook(
+    @Param('id') id: number
+  ) {
+    const target = await Target.findOneById(id)
+    if(!target) throw new NotFoundError('Cannot find target')
+    return target
+  }
 
 }
