@@ -37,17 +37,18 @@ describe('TargetController', () => {
     })
 
     test('/targets', async () => {
+
+        const target = {
+            name: "automated Test",
+            active: true,
+            url: "test@test.tt",
+            events: ["test"]
+        }
+
         await request(await app.callback())
             .post('/targets')
-            .set('Accept', 'application/json')
-            .set(
-                    {
-                        name: "automated Test",
-                        active: true,
-                        url: "test@test.tt",
-                        events: []
-                    }
-                )
+            //.set('Accept', 'application/json')
+            .set(target)
             //.set('x-user-roles', 'teacher')
             .expect(200)
     })
