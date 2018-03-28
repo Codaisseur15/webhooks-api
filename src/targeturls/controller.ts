@@ -31,8 +31,7 @@ export default class TargetController {
   }
 
   @Get('/targets')
-  async getHooks(
-  ) {
+  async getHooks() {
     const targets = await Target.find()
     return { targets }
   }

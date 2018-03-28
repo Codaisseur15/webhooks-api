@@ -1,4 +1,4 @@
-import {Body, JsonController, Post} from "routing-controllers";
+import {Body, JsonController, Post, Get, QueryParam} from "routing-controllers";
 import {Target} from "../targeturls/entities";
 import {getRepository} from "typeorm";
 import * as request from 'superagent'
@@ -47,4 +47,33 @@ export default class EventController {
 
      return Promise.all(dbPromises)
   }
+
+  @Get('/events')
+  async getEvents() {
+    const events = await SentEvent.find()
+    return { events }
+  }
+
+  @Get('/events/sent')
+  async getSentEvents(
+  ) {
+
+  }
+
+  @Get('/events/failed')
+  async getFailedEvents(
+  ) {
+
+  }
+
+  @Get('/events')
+  async getEventByStatus(
+    @QueryParam('status') status: number
+  ) {
+    const events = await SentEvent.find(
+      {where: {status: status}}
+    )
+    return { events }
+  }
+
 }
