@@ -19,6 +19,7 @@ export default class EventController {
     const hooks = await getRepository(Target)
       .createQueryBuilder("hook")
       .where("hook.events like :event", {event: `%${body.event}%`})
+      .where("hook.active = true")
       .getMany()
 
     const promises = hooks.map(hook => {
