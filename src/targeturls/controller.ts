@@ -13,11 +13,10 @@ export default class TargetController {
     return Target.create(body).save()
   }
 
-
-  @Get('./targets')
-    getAllHooks(){
-      return Target.find()
-    }
+  // @Get('./targets')
+  //   getAllHooks(){
+  //     return Target.find()
+  //   }
 
   @Patch('/targets/:id')
   async updateHook(
