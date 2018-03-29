@@ -1,5 +1,5 @@
 
-import {Body, JsonController, Post, Patch, Get,Param, NotFoundError} from "routing-controllers";
+import {Body, JsonController, Post, Patch, Get,Param, NotFoundError, Authorized} from "routing-controllers";
 
 import {Target} from "./entities";
 
@@ -13,8 +13,8 @@ export default class TargetController {
     return Target.create(body).save()
   }
 
-
-  @Get('./targets')
+  @Authorized()
+  @Get('/targets')
     getAllHooks(){
       return Target.find()
     }
@@ -30,11 +30,6 @@ export default class TargetController {
     return Target.merge(target, update).save()
   }
 
-  @Get('/targets')
-  async getHooks() {
-    const targets = await Target.find()
-    return { targets }
-  }
 
   @Get('/targets/:id')
   async getHook(

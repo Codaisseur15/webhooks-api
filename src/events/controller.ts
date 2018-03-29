@@ -2,7 +2,7 @@ import {Body, JsonController, Post, Get, QueryParam} from "routing-controllers";
 import {Target} from "../targeturls/entities";
 import {getRepository} from "typeorm";
 import * as request from 'superagent'
-import {SentEvent} from "./entity";
+import { SentEvent } from "./entity";
 
 interface EventObject {
   event: string
