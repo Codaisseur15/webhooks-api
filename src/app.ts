@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { createKoaServer } from "routing-controllers"
+import { createKoaServer, Action } from "routing-controllers"
 import TargetController from "./targeturls/controller";
 import EventController from "./events/controller";
 
@@ -9,6 +9,8 @@ export const app = createKoaServer({
     controllers: [
         TargetController,
         EventController
-    ]
+    ],
+    authorizationChecker: (action: Action) => {
+      return action.request.headers["x-user-role"] === 'teacher'
+  }
 })
-

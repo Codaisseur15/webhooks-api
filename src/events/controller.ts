@@ -1,8 +1,8 @@
-import {Body, JsonController, Post, Get, QueryParam} from "routing-controllers";
+import {Body, JsonController, Post, Get, QueryParam, Authorized} from "routing-controllers";
 import {Target} from "../targeturls/entities";
 import {getRepository} from "typeorm";
 import * as request from 'superagent'
-import {SentEvent} from "./entity";
+import { SentEvent } from "./entity";
 
 interface EventObject {
   event: string
@@ -12,6 +12,8 @@ interface EventObject {
 @JsonController()
 export default class EventController {
 
+
+  @Authorized()
   @Post('/events')
   async sendEvent(
     @Body() body: EventObject
@@ -19,6 +21,7 @@ export default class EventController {
     const hooks = await getRepository(Target)
       .createQueryBuilder("hook")
       .where("hook.events like :event", {event: `%${body.event}%`})
+      .where("hook.active = true")
       .getMany()
 
     const promises = hooks.map(hook => {
@@ -48,12 +51,14 @@ export default class EventController {
      return Promise.all(dbPromises)
   }
 
+  @Authorized()
   @Get('/events')
   async getEvents() {
     const events = await SentEvent.find()
     return { events }
   }
 
+  @Authorized()
   @Get('/events/sent')
   async getSentEvents(
   ) {
@@ -63,6 +68,7 @@ export default class EventController {
     return { sentEvents }
   }
 
+  @Authorized()
   @Get('/events/failed')
   async getFailedEvents(
   ) {
@@ -75,6 +81,7 @@ export default class EventController {
   }
 
   // Find events by status code (http :4008/events?status=<code>)
+  @Authorized()
   @Get('/events')
   async getEventByStatus(
     @QueryParam('status') status: number

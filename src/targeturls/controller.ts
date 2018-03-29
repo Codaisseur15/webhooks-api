@@ -1,11 +1,12 @@
 
-import {Body, JsonController, Post, Patch, Get,Param, NotFoundError} from "routing-controllers";
+import {Body, JsonController, Post, Patch, Get,Param, NotFoundError, Authorized} from "routing-controllers";
 
 import {Target} from "./entities";
 
 @JsonController()
 export default class TargetController {
 
+  @Authorized()
   @Post('/targets')
   createHook(
     @Body() body: Target
@@ -13,11 +14,13 @@ export default class TargetController {
     return Target.create(body).save()
   }
 
-  // @Get('./targets')
-  //   getAllHooks(){
-  //     return Target.find()
-  //   }
+  @Authorized()
+  @Get('/targets')
+    getAllHooks(){
+      return Target.find()
+    }
 
+  @Authorized()
   @Patch('/targets/:id')
   async updateHook(
     @Param('id') id: number,
@@ -29,12 +32,7 @@ export default class TargetController {
     return Target.merge(target, update).save()
   }
 
-  @Get('/targets')
-  async getHooks() {
-    const targets = await Target.find()
-    return { targets }
-  }
-
+  @Authorized()
   @Get('/targets/:id')
   async getHook(
     @Param('id') id: number
