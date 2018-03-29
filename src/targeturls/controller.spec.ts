@@ -12,7 +12,7 @@ beforeAll(async () => {
 
 describe('TargetController', () => {
     
-    test('/targets', async () => {
+    test(' GET /targets', async () => {
         await request(await app.callback())
             .get('/targets')
             .set('Accept', 'application/json')
@@ -21,20 +21,16 @@ describe('TargetController', () => {
     })
 
     
-
-    test('/targets/1', async () => {
+    test('GET /targets/1', async () => {
         const parameter = 1;
-        await request(await app.callback())
+        const response = await request(await app.callback())
             .get('/targets/' + parameter)
             .set('Accept', 'application/json')
             //.set('x-user-roles', 'teacher')
-            .expect(await function (res) {
-                res.body.id = 1;
-            })
             .expect(200)
     })
 
-    test('/targets', async () => {
+    test('POST /targets', async () => {
 
         const target = {
             name: "automated Test",
@@ -43,29 +39,45 @@ describe('TargetController', () => {
             events: ["test"]
         }
 
-        await request(await app.callback())
+       const response =  await request(await app.callback())
             .post('/targets')
-            //.set('Accept', 'application/json')
-            .set(target)
+            .set('Accept', 'application/json')
+            .send(target)
             //.set('x-user-roles', 'teacher')
             .expect(200)
+
+
     })
 
 })
 
 /*
-describe('GET /user', function() {
-  it('user.name should be an case-insensitive match for "tobi"', function(done) {
-    request(app)
-      .get('/user')
-      .set('Accept', 'application/json')
-      .expect(function(res) {
-        res.body.id = 'some fixed id';
-        res.body.name = res.body.name.toUpperCase();
-      })
-      .expect(200, {
-        id: 'some fixed id',
-        name: 'TOBI'
-      }, done);
-  });
-});*/
+// This is how the request object is structured:
+{ 
+    "header": 
+        { 
+        "connection": "close", 
+        "content-length": "86", 
+        "content-type": "application/json; charset=utf-8", 
+        "date": "Thu, 29 Mar 2018 08:41:09 GMT" 
+        }, 
+
+    "req": 
+        { "data":
+                { "active": true, 
+                "events": ["test"], 
+                "name": "automated Test", 
+                "url": "test@test.tt" 
+                }, 
+            "headers": 
+                { "accept": "application/json", 
+                "content-type": "application/json", 
+                "user-agent": "node-superagent/3.8.2" 
+                }, 
+            "method": "POST", 
+            "url": "http://127.0.0.1:36399/targets" 
+        }, 
+    "status": 200, 
+    "text": "{\"name\":\"automated Test\",\"active\":true,\"url\":\"test@test.tt\",\"events\":[\"test\"],\"id\":27}" 
+}
+*/
